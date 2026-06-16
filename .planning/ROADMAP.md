@@ -27,7 +27,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Container exits immediately with a clear error message if any required env var (`DOWNLOAD_TOKEN`, `UPLOAD_TOKEN`, `MINIO_ENDPOINT`, `MINIO_BUCKET`, `MINIO_ACCESS_KEY`, `MINIO_SECRET_KEY`) is absent
   3. A request with a token in the query string is logged without the token value appearing in any log output
   4. A request using a path like `../../etc` or a name with `..` is rejected with 400 before reaching MinIO
-**Plans**: TBD
+**Plans**: 4 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project scaffold (package.json, tsconfig.json, bun.lock)
+- [ ] 01-02-PLAN.md — Foundation contracts (src/config.ts, src/lib/schemas.ts)
+- [ ] 01-03-PLAN.md — Core modules (MinIO client, auth, sanitize, log middlewares)
+- [ ] 01-04-PLAN.md — Wiring and Docker (health route, index.ts, Dockerfile)
 
 ### Phase 2: Core API
 **Goal**: Clients can discover and download app versions; CI/CD pipelines can upload new versions and publish them atomically
