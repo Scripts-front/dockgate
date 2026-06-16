@@ -1,0 +1,19 @@
+{
+  "name": "dockgate",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "dev": "bun --hot src/index.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "minio": "^8.0.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "bun-types": "^1.3.14",
+    "typescript": "^6.0.3"
+  }
+}

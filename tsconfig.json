@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "module": "Preserve",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
+    "types": ["bun-types"],
+    "noEmit": true,
+    "strict": true
+  },
+  "include": ["src/**/*.ts"]
+}
