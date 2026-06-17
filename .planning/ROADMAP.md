@@ -89,7 +89,7 @@ Plans:
 **Plans:** 1 plan
 
 Plans:
-- [ ] 05-01-PLAN.md — Deploy compose + CI/CD workflow (deploy/docker-compose.yml, .github/workflows/deploy.yml)
+- [x] 05-01-PLAN.md — Deploy compose + CI/CD workflow (deploy/docker-compose.yml, .github/workflows/deploy.yml)
 
 ### Phase 6: Proteger repositório público
 
