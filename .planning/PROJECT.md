@@ -26,6 +26,10 @@ Clientes autorizados conseguem baixar a versão mais recente de qualquer app reg
 
 - [x] ESLint v9 com typescript-eslint/strict, CI workflow e pre-commit hook configurados — Validated in Phase 4: ESLint Configuration
 
+### Validated
+
+- [x] Repositório público protegido: branch protection no master com required checks ESLint+Typecheck, force push bloqueado, SECURITY.md com canal de reporte de vulnerabilidades — Validated in Phase 6: protect-public-repo
+
 ### Active
 
 - [ ] Bucket único no MinIO com estrutura de pastas por app (`myapp/1.0.0.tar`, `myapp/latest.json`)
@@ -83,4 +87,4 @@ Este documento evolui em transições de fase e marcos do projeto.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-06-17 — Phase 5 complete: CI/CD pipeline (deploy/docker-compose.yml + .github/workflows/deploy.yml) — push no master publica biellil/dockgate:latest e aciona redeploy no Portainer*
+*Last updated: 2026-06-17 — Phase 6 complete: branch protection ativa no master (required checks ESLint+Typecheck, force push bloqueado) + SECURITY.md com email de contato*
