@@ -93,10 +93,11 @@ Plans:
 
 ### Phase 6: Proteger repositório público
 
-**Goal:** [To be planned]
-**Requirements**: TBD
+**Goal:** Branch master protegida com required status checks (ESLint + Typecheck), force push bloqueado, e SECURITY.md com canal de reporte de vulnerabilidades
+**Requirements**: REPO-01, REPO-02, REPO-03
 **Depends on:** Phase 5
-**Plans:** 0 plans
+**Plans:** 2 plans
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 6 to break down)
+- [ ] 06-01-PLAN.md — Typecheck no CI + SECURITY.md (.github/workflows/lint.yml, SECURITY.md)
+- [ ] 06-02-PLAN.md — Branch protection via gh api (master: required checks ESLint+Typecheck, no force push)
