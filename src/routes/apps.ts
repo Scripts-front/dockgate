@@ -9,7 +9,7 @@ import { config } from '../config.ts'
 import type { LatestManifest } from '../lib/schemas.ts'
 import { latestKey, tarKey } from '../lib/schemas.ts'
 import { validateAppName, validateVersion } from '../middleware/sanitize.ts'
-import { requireDownloadToken } from '../middleware/auth.ts'
+import { requireDownloadToken, requireUploadToken } from '../middleware/auth.ts'
 
 // isObjectNotFound: handles both XML-parsed (NoSuchKey) and no-XML fallback (NotFound) from MinIO SDK
 // Verified from node_modules/minio/dist/main/internal/xml-parser.js lines 59-85
@@ -83,5 +83,92 @@ appsRouter.get(
     )
     const url = rewritePresignedUrl(rawUrl) // replace internal hostname with MINIO_PUBLIC_ENDPOINT
     res.json({ url }) // D-01: only { url: string }, no expiresIn or other fields
+  },
+)
+
+// WRITE-01: POST /apps/:name/upload?version=X
+// Requires UPLOAD_TOKEN; generates presigned PUT URL for direct MinIO upload by CI/CD
+// No existence check — CI/CD is uploading a NEW file; checking first would break the workflow
+appsRouter.post(
+  '/:name/upload',
+  validateAppName,
+  requireUploadToken,
+  validateVersion,
+  async (req: Request, res: Response) => {
+    const name = req.params['name'] as string
+    const version = req.query.version as string
+
+    const rawUrl = await minioClient.presignedPutObject(
+      config.minioBucket,
+      tarKey(name, version),
+      900, // D-02: 900s upload URL expiry
+    )
+    const url = rewritePresignedUrl(rawUrl) // replace internal hostname with MINIO_PUBLIC_ENDPOINT
+    res.json({ url }) // D-01: only { url: string }
+  },
+)
+
+// WRITE-02, WRITE-03: PUT /apps/:name/latest
+// Requires UPLOAD_TOKEN; validates body, anti-phantom check, writes latest.json
+// D-06: 400 on invalid sha256/size BEFORE any MinIO call
+// D-10: 422 when .tar not found (anti-phantom)
+const SHA256_REGEX = /^[a-f0-9]{64}$/i // D-06: exactly 64 hex chars
+
+appsRouter.put(
+  '/:name/latest',
+  validateAppName,
+  requireUploadToken,
+  async (req: Request, res: Response) => {
+    const name = req.params['name'] as string
+    const { version, sha256, size } = req.body as { version: unknown; sha256: unknown; size: unknown }
+
+    // Input validation — ALL checks before anti-phantom (D-06 specifies 400 before MinIO call)
+    if (
+      typeof version !== 'string' ||
+      !version ||
+      !/^[a-zA-Z0-9._-]+$/.test(version) ||
+      version.includes('..')
+    ) {
+      res.status(400).json({ error: 'Invalid version' })
+      return
+    }
+    if (typeof sha256 !== 'string' || !SHA256_REGEX.test(sha256)) {
+      res.status(400).json({ error: 'Invalid sha256' }) // D-06
+      return
+    }
+    if (typeof size !== 'number' || !Number.isInteger(size) || size <= 0) {
+      res.status(400).json({ error: 'Invalid size' }) // D-07
+      return
+    }
+
+    // Anti-phantom check (WRITE-03, D-10) — verify .tar exists before writing latest.json
+    try {
+      await minioClient.statObject(config.minioBucket, tarKey(name, version))
+    } catch (err) {
+      if (isObjectNotFound(err)) {
+        res.status(422).json({ error: `Tar file not found for version ${version}` }) // D-10
+        return
+      }
+      throw err // unexpected error — global handler returns 500
+    }
+
+    // Build and write latest.json (D-05, D-08)
+    const manifest: LatestManifest = {
+      schema: 1,
+      version,
+      sha256,
+      size,
+      publishedAt: new Date().toISOString(), // D-08: server time, not from CI/CD
+    }
+    const json = JSON.stringify(manifest)
+    await minioClient.putObject(
+      config.minioBucket,
+      latestKey(name),
+      json,
+      Buffer.byteLength(json),
+      { 'Content-Type': 'application/json' },
+    )
+
+    res.status(200).json({ ok: true })
   },
 )

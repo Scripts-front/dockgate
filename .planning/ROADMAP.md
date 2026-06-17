@@ -44,11 +44,7 @@ Plans:
   2. `GET /apps/:name/download?version=X` with a valid `DOWNLOAD_TOKEN` returns a presigned MinIO URL; the same request without a valid token returns 401
   3. `POST /apps/:name/upload?version=X` with a valid `UPLOAD_TOKEN` returns a presigned PUT URL for direct MinIO upload
   4. `PUT /apps/:name/latest` with a valid `UPLOAD_TOKEN` updates `latest.json` only when the corresponding `.tar` exists in MinIO; if the `.tar` is absent the request returns 422
-**Plans**: 2 plans
-
-Plans:
-- [ ] 02-01-PLAN.md — Read endpoints (GET /latest, GET /download) + helpers
-- [ ] 02-02-PLAN.md — Write endpoints (POST /upload, PUT /latest) + router registration
+**Plans**: TBD
 
 ### Phase 3: CI/CD Docs
 **Goal**: A developer can set up the full DockGate pipeline from the repository alone, without asking anyone
