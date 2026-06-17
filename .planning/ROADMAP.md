@@ -99,5 +99,5 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 06-01-PLAN.md — Typecheck no CI + SECURITY.md (.github/workflows/lint.yml, SECURITY.md)
+- [x] 06-01-PLAN.md — Typecheck no CI + SECURITY.md (.github/workflows/lint.yml, SECURITY.md)
 - [ ] 06-02-PLAN.md — Branch protection via gh api (master: required checks ESLint+Typecheck, no force push)
