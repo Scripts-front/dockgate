@@ -83,4 +83,4 @@ Este documento evolui em transições de fase e marcos do projeto.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-06-17 — Phase 4 complete: ESLint v9 flat config, CI lint workflow, pre-commit hook*
+*Last updated: 2026-06-17 — Phase 5 complete: CI/CD pipeline (deploy/docker-compose.yml + .github/workflows/deploy.yml) — push no master publica biellil/dockgate:latest e aciona redeploy no Portainer*
