@@ -41,7 +41,7 @@ export const config = {
   minioEndpoint,
   minioPort,
   minioUseSSL: process.env.MINIO_USE_SSL === 'true' || minioPort === 443,
-  minioPublicEndpoint: process.env.MINIO_PUBLIC_ENDPOINT!,
+  minioPublicEndpoint: process.env.MINIO_PUBLIC_ENDPOINT!.replace(/\/+$/, ''),
   minioBucket: process.env.MINIO_BUCKET!,
   minioAccessKey: process.env.MINIO_ACCESS_KEY!,
   minioSecretKey: process.env.MINIO_SECRET_KEY!,
