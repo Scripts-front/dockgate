@@ -11,7 +11,13 @@ export const minioClient = new Minio.Client({
 })
 
 export async function verifyMinioConnection(): Promise<void> {
-  const exists = await minioClient.bucketExists(config.minioBucket)
+  let exists: boolean
+  try {
+    exists = await minioClient.bucketExists(config.minioBucket)
+  } catch (err) {
+    console.error(`[startup] MinIO connection failed:`, err)
+    process.exit(1)
+  }
   if (!exists) {
     console.error(`[startup] MinIO bucket '${config.minioBucket}' does not exist`)
     process.exit(1)
