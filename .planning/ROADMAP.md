@@ -30,10 +30,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 4 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Project scaffold (package.json, tsconfig.json, bun.lock)
-- [ ] 01-02-PLAN.md — Foundation contracts (src/config.ts, src/lib/schemas.ts)
-- [ ] 01-03-PLAN.md — Core modules (MinIO client, auth, sanitize, log middlewares)
-- [ ] 01-04-PLAN.md — Wiring and Docker (health route, index.ts, Dockerfile)
+- [x] 01-01-PLAN.md — Project scaffold (package.json, tsconfig.json, bun.lock)
+- [x] 01-02-PLAN.md — Foundation contracts (src/config.ts, src/lib/schemas.ts)
+- [x] 01-03-PLAN.md — Core modules (MinIO client, auth, sanitize, log middlewares)
+- [x] 01-04-PLAN.md — Wiring and Docker (health route, index.ts, Dockerfile)
 
 ### Phase 2: Core API
 **Goal**: Clients can discover and download app versions; CI/CD pipelines can upload new versions and publish them atomically
@@ -66,3 +66,23 @@ Phases execute in numeric order: 1 → 2 → 3
 | 1. Foundation | 0/? | Not started | - |
 | 2. Core API | 0/? | Not started | - |
 | 3. CI/CD Docs | 0/? | Not started | - |
+
+### Phase 4: Add ESLint configuration (.eslintrc)
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 3
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 4 to break down)
+
+### Phase 5: subir docker image para o Docker Hub via CI/CD
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 4
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 5 to break down)

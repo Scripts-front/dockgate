@@ -65,6 +65,11 @@ Recent decisions affecting current work:
 - Research: Presigned URL hostname must be externally resolvable — resolve before Phase 1 implementation
 - Research: `timingSafeEqual` requires SHA-256 hash of both sides (fixed-size buffers), not raw string comparison
 
+### Roadmap Evolution
+
+- Phase 4 added: Add ESLint configuration (.eslintrc)
+- Phase 5 added: subir docker image para o Docker Hub via CI/CD
+
 ### Pending Todos
 
 None yet.
