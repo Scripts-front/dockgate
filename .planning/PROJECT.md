@@ -18,6 +18,10 @@ Clientes autorizados conseguem baixar a versão mais recente de qualquer app reg
 - [x] Endpoint `PUT /apps/:name/latest` atualiza o `latest.json` no MinIO com a nova versão (requer UPLOAD_TOKEN) — Validated in Phase 2: Core API
 - [x] Autenticação por dois tokens fixos: `DOWNLOAD_TOKEN` (clientes) e `UPLOAD_TOKEN` (CI/CD) — Validated in Phase 1: Foundation
 
+### Validated
+
+- [x] Documentação CI/CD completa: workflow GitHub Actions copy-paste + guia de integração com secrets, walk-through e troubleshooting — Validated in Phase 3: CI/CD Docs
+
 ### Active
 
 - [ ] Bucket único no MinIO com estrutura de pastas por app (`myapp/1.0.0.tar`, `myapp/latest.json`)
@@ -75,4 +79,4 @@ Este documento evolui em transições de fase e marcos do projeto.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-06-17 — Phase 2 complete: Core API endpoints implemented*
+*Last updated: 2026-06-17 — Phase 3 complete: CI/CD integration docs (GitHub Actions YAML + guide)*
