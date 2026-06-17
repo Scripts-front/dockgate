@@ -19,6 +19,10 @@ export default tseslint.config(
       ],
       // Discretion: warn on console usage (not an error — health route uses it)
       "no-console": "warn",
+      // Non-null assertions are safe here: all env vars are validated at startup via process.exit(1)
+      "@typescript-eslint/no-non-null-assertion": "off",
+      // Allow _-prefixed parameters in callbacks (e.g. Express error handlers require 4 params)
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
     },
   }
 );
