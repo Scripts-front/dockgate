@@ -53,8 +53,10 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. Repository contains a GitHub Actions workflow YAML that a developer can copy, set the required secrets, and run without modification
   2. The guide covers every step of the pipeline: build image, export `.tar`, request upload URL, PUT to MinIO, call `PUT /latest`
-**Plans**: TBD
-**UI hint**: no
+**Plans**: 1 plan
+
+Plans:
+- [ ] 03-01-PLAN.md — CI/CD docs (docs/examples/github-actions.yml, docs/ci-cd.md, README.md)
 
 ## Progress
 
