@@ -112,7 +112,7 @@ appsRouter.post(
 // Requires UPLOAD_TOKEN; validates body, anti-phantom check, writes latest.json
 // D-06: 400 on invalid sha256/size BEFORE any MinIO call
 // D-10: 422 when .tar not found (anti-phantom)
-const SHA256_REGEX = /^[a-f0-9]{64}$/i // D-06: exactly 64 hex chars
+const SHA256_REGEX = /^[a-f0-9]{64}$/ // D-06: exactly 64 lowercase hex chars
 
 appsRouter.put(
   '/:name/latest',
@@ -156,7 +156,7 @@ appsRouter.put(
     const manifest: LatestManifest = {
       schema: 1,
       version,
-      sha256,
+      sha256: sha256.toLowerCase(), // normalize to lowercase hex
       size,
       publishedAt: new Date().toISOString(), // D-08: server time, not from CI/CD
     }
