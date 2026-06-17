@@ -423,7 +423,7 @@ Source: Derived from API contracts [VERIFIED: src/routes/apps.ts], GitHub Action
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Does README.md need to be created from scratch?**
    - What we know: No `README.md` found in the repo root.

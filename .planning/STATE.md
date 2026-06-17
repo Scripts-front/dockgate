@@ -71,6 +71,7 @@ Recent decisions affecting current work:
 
 - Phase 4 added: Add ESLint configuration (.eslintrc)
 - Phase 5 added: subir docker image para o Docker Hub via CI/CD
+- Phase 6 added: eu dexei o repo blucio ai quero projter esse repo ai esse phase quero seja o numero 6
 
 ### Pending Todos
 

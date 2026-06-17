@@ -90,3 +90,13 @@ Plans:
 
 Plans:
 - [ ] TBD (run /gsd-plan-phase 5 to break down)
+
+### Phase 6: eu dexei o repo blucio ai quero projter esse repo ai esse phase quero seja o numero 6
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 5
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd-plan-phase 6 to break down)
