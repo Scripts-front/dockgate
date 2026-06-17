@@ -1,0 +1,90 @@
+name: Build and Publish Docker Image via DockGate
+
+# Triggered on version tag pushes (e.g., v1.2.3).
+# The tag is used directly as the DockGate version string (without the "v" prefix).
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+# Workflow-level variables — set these to match your project before copying.
+env:
+  APP_NAME: my-app          # Change to your app name registered in DockGate
+  IMAGE_NAME: my-org/my-app # Docker image to build (org/name format)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out source code so Docker has access to the Dockerfile.
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Step 2: Extract the semantic version from the git tag.
+      # Tag "v1.2.3" → VERSION "1.2.3". DockGate uses this as the MinIO object key
+      # ({appName}/{version}.tar) so it must be consistent across all steps.
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      # Step 3: Build the Docker image tagged with the extracted version.
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:${{ steps.version.outputs.VERSION }} .
+
+      # Step 4: Export the image as a .tar archive.
+      # Use "docker save" (not "docker export") — save preserves all layers and
+      # metadata required to reconstruct the image on the client side via "docker load".
+      - name: Export image to tar
+        run: docker save $IMAGE_NAME:${{ steps.version.outputs.VERSION }} -o image.tar
+
+      # Step 5: Calculate sha256 checksum and byte size of the .tar file.
+      # Both values are required by the DockGate PUT /latest endpoint for integrity
+      # verification. sha256sum outputs lowercase hex — the API accepts exactly 64
+      # lowercase hex characters. stat -c%s returns size in bytes as a plain integer.
+      - name: Calculate sha256 and size
+        id: integrity
+        run: |
+          echo "SHA256=$(sha256sum image.tar | awk '{ print $1 }')" >> $GITHUB_OUTPUT
+          echo "SIZE=$(stat -c%s image.tar)" >> $GITHUB_OUTPUT
+
+      # Step 6: Request a presigned upload URL from DockGate.
+      # POST /apps/:name/upload?version=X returns { "url": "..." } — a presigned MinIO
+      # PUT URL valid for 900 seconds. The upload (step 7) must complete within this window.
+      # Secrets are scoped to this step's env block so they are not exposed in other steps.
+      - name: Request upload URL from DockGate
+        id: upload_url
+        env:
+          DOCKGATE_URL: ${{ secrets.DOCKGATE_URL }}
+          DOCKGATE_UPLOAD_TOKEN: ${{ secrets.DOCKGATE_UPLOAD_TOKEN }}
+        run: |
+          RESPONSE=$(curl -sf -X POST \
+            -H "Authorization: Bearer $DOCKGATE_UPLOAD_TOKEN" \
+            "$DOCKGATE_URL/apps/$APP_NAME/upload?version=${{ steps.version.outputs.VERSION }}")
+          echo "URL=$(echo $RESPONSE | jq -r .url)" >> $GITHUB_OUTPUT
+
+      # Step 7: Upload the .tar directly to MinIO using the presigned URL.
+      # No Authorization header — the presigned URL already carries MinIO credentials.
+      # DockGate never sees the file bytes; the upload goes directly to MinIO.
+      - name: Upload image to MinIO
+        run: |
+          curl -sf -X PUT \
+            -H "Content-Type: application/octet-stream" \
+            --upload-file image.tar \
+            "${{ steps.upload_url.outputs.URL }}"
+
+      # Step 8: Publish the new version as "latest" via DockGate.
+      # PUT /apps/:name/latest with { version, sha256, size } atomically updates the
+      # latest pointer in MinIO. The API verifies the .tar exists before writing
+      # (anti-phantom protection). IMPORTANT: size must be a JSON integer — not a string.
+      # Wrapping $SIZE in quotes would produce "size":"12345" which the API rejects with 400.
+      - name: Publish latest version via DockGate
+        env:
+          DOCKGATE_URL: ${{ secrets.DOCKGATE_URL }}
+          DOCKGATE_UPLOAD_TOKEN: ${{ secrets.DOCKGATE_UPLOAD_TOKEN }}
+        run: |
+          curl -sf -X PUT \
+            -H "Authorization: Bearer $DOCKGATE_UPLOAD_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"version\":\"${{ steps.version.outputs.VERSION }}\",\"sha256\":\"${{ steps.integrity.outputs.SHA256 }}\",\"size\":${{ steps.integrity.outputs.SIZE }}}" \
+            "$DOCKGATE_URL/apps/$APP_NAME/latest"
