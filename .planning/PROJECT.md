@@ -22,6 +22,10 @@ Clientes autorizados conseguem baixar a versão mais recente de qualquer app reg
 
 - [x] Documentação CI/CD completa: workflow GitHub Actions copy-paste + guia de integração com secrets, walk-through e troubleshooting — Validated in Phase 3: CI/CD Docs
 
+### Validated
+
+- [x] ESLint v9 com typescript-eslint/strict, CI workflow e pre-commit hook configurados — Validated in Phase 4: ESLint Configuration
+
 ### Active
 
 - [ ] Bucket único no MinIO com estrutura de pastas por app (`myapp/1.0.0.tar`, `myapp/latest.json`)
@@ -79,4 +83,4 @@ Este documento evolui em transições de fase e marcos do projeto.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-06-17 — Phase 3 complete: CI/CD integration docs (GitHub Actions YAML + guide)*
+*Last updated: 2026-06-17 — Phase 4 complete: ESLint v9 flat config, CI lint workflow, pre-commit hook*
