@@ -1,0 +1,20 @@
+# DockGate — Deploy Compose for Portainer
+# Import this file into Portainer as a new Stack.
+# Fill in all environment variable values before deploying.
+# MinIO is NOT included — it runs separately on the VPS.
+
+services:
+  dockgate:
+    image: biellil/dockgate:latest
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: ""
+      DOWNLOAD_TOKEN: ""
+      UPLOAD_TOKEN: ""
+      MINIO_ENDPOINT: ""
+      MINIO_PUBLIC_ENDPOINT: ""
+      MINIO_BUCKET: ""
+      MINIO_ACCESS_KEY: ""
+      MINIO_SECRET_KEY: ""
