@@ -84,12 +84,12 @@ Plans:
 ### Phase 5: subir docker image para o Docker Hub via CI/CD e atualizar stack no Portainer
 
 **Goal:** CI/CD faz build da imagem Docker, publica no Docker Hub e atualiza automaticamente a stack rodando no Portainer
-**Requirements**: TBD
+**Requirements**: INFRA-02, INFRA-04
 **Depends on:** Phase 4
-**Plans:** 0 plans
+**Plans:** 1 plan
 
 Plans:
-- [ ] TBD (run /gsd-plan-phase 5 to break down)
+- [ ] 05-01-PLAN.md — Deploy compose + CI/CD workflow (deploy/docker-compose.yml, .github/workflows/deploy.yml)
 
 ### Phase 6: Proteger repositório público
 
