@@ -5,7 +5,8 @@
     "verbatimModuleSyntax": true,
     "types": ["bun-types"],
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "allowImportingTsExtensions": true
   },
   "include": ["src/**/*.ts"]
 }

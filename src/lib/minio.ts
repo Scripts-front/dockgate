@@ -5,7 +5,7 @@ import { config } from '../config.ts'
 export const minioClient = new Minio.Client({
   endPoint: config.minioEndpoint,   // hostname only: 'minio' or '192.168.1.10' — never 'http://minio'
   port: config.minioPort,           // explicit integer port, e.g. 9000
-  useSSL: false,                    // D-01: internal Docker network, no TLS
+  useSSL: config.minioUseSSL,
   accessKey: config.minioAccessKey,
   secretKey: config.minioSecretKey,
 })

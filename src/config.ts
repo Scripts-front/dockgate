@@ -30,6 +30,7 @@ export const config = {
   uploadToken: process.env.UPLOAD_TOKEN!,
   minioEndpoint,
   minioPort,
+  minioUseSSL: process.env.MINIO_USE_SSL === 'true' || minioPort === 443,
   minioPublicEndpoint: process.env.MINIO_PUBLIC_ENDPOINT!,
   minioBucket: process.env.MINIO_BUCKET!,
   minioAccessKey: process.env.MINIO_ACCESS_KEY!,
