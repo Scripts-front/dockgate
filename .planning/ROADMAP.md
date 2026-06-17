@@ -77,9 +77,9 @@ Phases execute in numeric order: 1 → 2 → 3
 Plans:
 - [ ] TBD (run /gsd-plan-phase 4 to break down)
 
-### Phase 5: subir docker image para o Docker Hub via CI/CD
+### Phase 5: subir docker image para o Docker Hub via CI/CD e atualizar stack no Portainer
 
-**Goal:** [To be planned]
+**Goal:** CI/CD faz build da imagem Docker, publica no Docker Hub e atualiza automaticamente a stack rodando no Portainer
 **Requirements**: TBD
 **Depends on:** Phase 4
 **Plans:** 0 plans
