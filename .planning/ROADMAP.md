@@ -56,7 +56,7 @@ Plans:
 **Plans**: 1 plan
 
 Plans:
-- [ ] 03-01-PLAN.md — CI/CD docs (docs/examples/github-actions.yml, docs/ci-cd.md, README.md)
+- [x] 03-01-PLAN.md — CI/CD docs (docs/examples/github-actions.yml, docs/ci-cd.md, README.md)
 
 ## Progress
 
