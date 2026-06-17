@@ -77,9 +77,9 @@ Phases execute in numeric order: 1 → 2 → 3
 **Plans:** 3 plans
 
 Plans:
-- [ ] 04-01-PLAN.md — ESLint config and lint script (eslint.config.js, package.json)
-- [ ] 04-02-PLAN.md — GitHub Actions lint workflow (.github/workflows/lint.yml)
-- [ ] 04-03-PLAN.md — Pre-commit hook (husky + lint-staged, .husky/pre-commit)
+- [x] 04-01-PLAN.md — ESLint config and lint script (eslint.config.js, package.json)
+- [x] 04-02-PLAN.md — GitHub Actions lint workflow (.github/workflows/lint.yml)
+- [x] 04-03-PLAN.md — Pre-commit hook (husky + lint-staged, .husky/pre-commit)
 
 ### Phase 5: subir docker image para o Docker Hub via CI/CD e atualizar stack no Portainer
 
