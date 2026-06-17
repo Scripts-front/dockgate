@@ -11,9 +11,12 @@ function makeTokenMiddleware(expectedToken: string) {
   const expectedHash = sha256(expectedToken)
   return (req: Request, res: Response, next: NextFunction): void => {
     const authHeader = req.headers.authorization
-    const token = authHeader?.startsWith('Bearer ')
+    const rawToken = authHeader?.startsWith('Bearer ')
       ? authHeader.slice(7)
-      : (req.query.token as string | undefined)
+      : req.query.token
+
+    // Guard: reject non-string query param forms (arrays, objects)
+    const token = typeof rawToken === 'string' ? rawToken : undefined
     if (!token || !timingSafeEqual(sha256(token), expectedHash)) {
       res.status(401).json({ error: 'Unauthorized' })
       return
