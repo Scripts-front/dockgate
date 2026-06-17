@@ -12,15 +12,14 @@ Clientes autorizados conseguem baixar a versão mais recente de qualquer app reg
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Endpoint `GET /apps/:name/latest` retorna a versão mais recente da app — Validated in Phase 2: Core API
+- [x] Endpoint `GET /apps/:name/download?version=X` valida token, verifica existência da versão e retorna URL pré-assinada do MinIO — Validated in Phase 2: Core API
+- [x] Endpoint `POST /apps/:name/upload?version=X` gera URL pré-assinada de upload para CI/CD enviar o `.tar` diretamente ao MinIO — Validated in Phase 2: Core API
+- [x] Endpoint `PUT /apps/:name/latest` atualiza o `latest.json` no MinIO com a nova versão (requer UPLOAD_TOKEN) — Validated in Phase 2: Core API
+- [x] Autenticação por dois tokens fixos: `DOWNLOAD_TOKEN` (clientes) e `UPLOAD_TOKEN` (CI/CD) — Validated in Phase 1: Foundation
 
 ### Active
 
-- [ ] Endpoint `GET /apps/:name/latest` retorna a versão mais recente da app
-- [ ] Endpoint `GET /apps/:name/download?version=X&token=Y` valida token, verifica existência da versão e retorna URL pré-assinada do MinIO
-- [ ] Endpoint `POST /apps/:name/upload?version=X` gera URL pré-assinada de upload para CI/CD enviar o `.tar` diretamente ao MinIO
-- [ ] Endpoint `PUT /apps/:name/latest` atualiza o `latest.json` no MinIO com a nova versão (requer UPLOAD_TOKEN)
-- [ ] Autenticação por dois tokens fixos: `DOWNLOAD_TOKEN` (clientes) e `UPLOAD_TOKEN` (CI/CD)
 - [ ] Bucket único no MinIO com estrutura de pastas por app (`myapp/1.0.0.tar`, `myapp/latest.json`)
 - [ ] Container Docker da API com deploy via CI/CD no Portainer
 
@@ -76,4 +75,4 @@ Este documento evolui em transições de fase e marcos do projeto.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-06-16 after initialization*
+*Last updated: 2026-06-17 — Phase 2 complete: Core API endpoints implemented*
