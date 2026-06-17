@@ -13,7 +13,8 @@ healthRouter.get('/health', async (_req, res) => {
     } else {
       res.status(503).json({ ok: false, minio: 'unreachable' })
     }
-  } catch {
+  } catch (err) {
+    console.error('[health] MinIO check failed:', err)
     res.status(503).json({ ok: false, minio: 'unreachable' })
   }
 })
