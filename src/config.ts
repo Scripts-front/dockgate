@@ -24,6 +24,16 @@ const rawEndpoint = process.env.MINIO_ENDPOINT!
 const colonIndex = rawEndpoint.lastIndexOf(':')
 const minioEndpoint = colonIndex === -1 ? rawEndpoint : rawEndpoint.slice(0, colonIndex)
 const minioPort = colonIndex === -1 ? 9000 : parseInt(rawEndpoint.slice(colonIndex + 1), 10)
+if (colonIndex !== -1 && isNaN(minioPort)) {
+  console.error(`[startup] Invalid port in MINIO_ENDPOINT: '${rawEndpoint}'`)
+  process.exit(1)
+}
+
+const port = parseInt(process.env.PORT ?? '3000', 10)
+if (isNaN(port)) {
+  console.error(`[startup] Invalid PORT value: '${process.env.PORT}'`)
+  process.exit(1)
+}
 
 export const config = {
   downloadToken: process.env.DOWNLOAD_TOKEN!,
@@ -35,5 +45,5 @@ export const config = {
   minioBucket: process.env.MINIO_BUCKET!,
   minioAccessKey: process.env.MINIO_ACCESS_KEY!,
   minioSecretKey: process.env.MINIO_SECRET_KEY!,
-  port: parseInt(process.env.PORT ?? '3000', 10),
+  port,
 } as const
